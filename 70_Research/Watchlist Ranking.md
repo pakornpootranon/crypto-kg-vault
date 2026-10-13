@@ -6,6 +6,8 @@ tags:
 ---
 
 # Watchlist ranking (2026-10-13 build)
+From the first weekly run on, the scheduled task replaces this table with ST and LT ranks from [[Schema - Horizon Scoring]]; the trigger column is kept. Latest report: see [[Horizon Board]].
+
 Every token is ranked every run, per the inflow-radar rule. Scores are from [[Schema - Scoring Rubric]]; blanks are not yet scored (flows need on-chain data not pulled in this build).
 
 | Token | Tier | Heat | Sent | Fund | Cat | Composite (ex-flows) | Bucket | Trigger to upgrade |

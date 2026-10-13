@@ -25,6 +25,26 @@ score_flows:
 score_sentiment: 
 score_fundamentals: 
 score_catalysts: 
+defillama_parent:
+defillama_slug:
+defillama_chain:
+score_momentum:
+score_adoption:
+score_tokenomics:
+score_narrative:
+hint_adoption:
+hint_tokenomics:
+unlock_next_date:
+unlock_pct_supply:
+risk_flag:
+st_setup:
+st_entry:
+st_invalidation:
+lt_thesis:
+st_score:
+lt_score:
+bucket:
+coingecko_id:
 tags:
   - token
 ---
@@ -45,3 +65,6 @@ Protocol node: [[ ]].
 - native_token_of:: [[ ]]
 - rides_narrative:: [[ ]]
 - catalyst:: [[ ]]
+
+## Weekly notes
+- 

@@ -6,9 +6,9 @@ snapshot_date: 2026-10-13
 status: candidate
 tier: 2
 social_heat: 5
-price_usd: 0.1065
-mcap_usd_m: 807
-price_date: 2026-10-12
+price_usd: 0.090004
+mcap_usd_m: 668
+price_date: 2026-10-13
 bigdata_entity_id: D2I3AN
 bigdata_entity_note: StarkWare Ltd.; tearsheet works
 sentiment_current: 0.32
@@ -25,6 +25,41 @@ score_sentiment: 5
 score_fundamentals: 2
 score_catalysts: 3
 category: L2 (ZK) / possible L1
+defillama_parent:
+defillama_slug:
+defillama_chain: Starknet
+score_momentum: 5
+score_adoption:
+score_tokenomics:
+score_narrative:
+hint_adoption: 3
+hint_tokenomics: 3
+unlock_next_date:
+unlock_pct_supply:
+risk_flag:
+st_setup:
+st_entry:
+st_invalidation:
+lt_thesis:
+st_score:
+lt_score:
+bucket:
+coingecko_id: starknet
+fdv_usd_m: 900
+mc_fdv: 0.74
+vol24h_usd_m: 373.9
+chg_7d: 73.2
+chg_30d: 220.7
+rs_btc_7d: 76.1
+rs_btc_30d: 211.9
+ath_drawdown_pct: -98.0
+tvl_usd_m: 166
+tvl_chg_7d: 0.9
+fees_30d_usd_m:
+fees_chg_30d:
+liquidity_ok: true
+extended: true
+mkt_date: 2026-10-13
 tags:
   - token
   - l2

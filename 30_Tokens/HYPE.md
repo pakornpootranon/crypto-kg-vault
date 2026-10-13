@@ -6,9 +6,9 @@ snapshot_date: 2026-10-13
 status: watch
 tier: 1
 social_heat: 4
-price_usd: 86
-mcap_usd_m: 
-price_date: 2026-10-12
+price_usd: 82.21
+mcap_usd_m: 18292
+price_date: 2026-10-13
 bigdata_entity_id: EE3703
 bigdata_entity_note: resolves to 21Shares Hyperliquid Staking ETP (proxy); G77KK8 = Hyperliquid Holding AG
 sentiment_current: -0.16
@@ -25,6 +25,41 @@ score_sentiment: 2
 score_fundamentals: 5
 score_catalysts: 3
 category: perp DEX (non-ETH comparator)
+defillama_parent: parent#hyperliquid
+defillama_slug:
+defillama_chain:
+score_momentum: 1
+score_adoption:
+score_tokenomics:
+score_narrative:
+hint_adoption: 2
+hint_tokenomics: 1
+unlock_next_date:
+unlock_pct_supply:
+risk_flag:
+st_setup:
+st_entry:
+st_invalidation:
+lt_thesis:
+st_score:
+lt_score:
+bucket:
+coingecko_id: hyperliquid
+fdv_usd_m: 78555
+mc_fdv: 0.23
+vol24h_usd_m: 939.4
+chg_7d: -12.0
+chg_30d: 5.6
+rs_btc_7d: -9.1
+rs_btc_30d: -3.1
+ath_drawdown_pct: -16.1
+tvl_usd_m: 7211
+tvl_chg_7d: -4.1
+fees_30d_usd_m: 87.6
+fees_chg_30d: -7.9
+liquidity_ok: true
+extended: false
+mkt_date: 2026-10-13
 tags:
   - token
   - perp

@@ -6,9 +6,9 @@ snapshot_date: 2026-10-13
 status: candidate
 tier: 1
 social_heat: 5
-price_usd: 0.28
-mcap_usd_m: 
-price_date: 2026-09-30
+price_usd: 0.211056
+mcap_usd_m: 2833
+price_date: 2026-10-13
 bigdata_entity_id: 55SK7Y
 bigdata_entity_note: Ethena GmbH shows no coverage; sentiment must come from smart search
 sentiment_current: 
@@ -25,6 +25,41 @@ score_sentiment: 4
 score_fundamentals: 3
 score_catalysts: 3
 category: yield stablecoin issuer
+defillama_parent: parent#ethena
+defillama_slug:
+defillama_chain:
+score_momentum: 3
+score_adoption:
+score_tokenomics:
+score_narrative:
+hint_adoption: 2
+hint_tokenomics: 4
+unlock_next_date:
+unlock_pct_supply:
+risk_flag:
+st_setup:
+st_entry:
+st_invalidation:
+lt_thesis:
+st_score:
+lt_score:
+bucket:
+coingecko_id: ethena
+fdv_usd_m: 3170
+mc_fdv: 0.89
+vol24h_usd_m: 548.0
+chg_7d: -12.2
+chg_30d: 53.8
+rs_btc_7d: -9.3
+rs_btc_30d: 45.1
+ath_drawdown_pct: -86.1
+tvl_usd_m: 5240
+tvl_chg_7d: -3.8
+fees_30d_usd_m: 17.9
+fees_chg_30d: 1.3
+liquidity_ok: true
+extended: false
+mkt_date: 2026-10-13
 tags:
   - token
   - defi

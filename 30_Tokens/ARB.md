@@ -6,9 +6,9 @@ snapshot_date: 2026-10-13
 status: candidate
 tier: 1
 social_heat: 4
-price_usd: 0.199
-mcap_usd_m: 
-price_date: 2026-10-12
+price_usd: 0.184341
+mcap_usd_m: 1251
+price_date: 2026-10-13
 bigdata_entity_id: UBXYMO
 bigdata_entity_note: Offchain Labs Inc. (developer); Arbitrum Foundation unresolved
 sentiment_current: 
@@ -25,6 +25,41 @@ score_sentiment: 4
 score_fundamentals: 3
 score_catalysts: 4
 category: L2 governance
+defillama_parent:
+defillama_slug:
+defillama_chain: Arbitrum
+score_momentum: 3
+score_adoption:
+score_tokenomics:
+score_narrative:
+hint_adoption: 2
+hint_tokenomics: 3
+unlock_next_date:
+unlock_pct_supply:
+risk_flag:
+st_setup:
+st_entry:
+st_invalidation:
+lt_thesis:
+st_score:
+lt_score:
+bucket:
+coingecko_id: arbitrum
+fdv_usd_m: 1843
+mc_fdv: 0.68
+vol24h_usd_m: 182.3
+chg_7d: -8.4
+chg_30d: 37.3
+rs_btc_7d: -5.5
+rs_btc_30d: 28.6
+ath_drawdown_pct: -92.3
+tvl_usd_m: 1379
+tvl_chg_7d: -3.3
+fees_30d_usd_m:
+fees_chg_30d:
+liquidity_ok: true
+extended: false
+mkt_date: 2026-10-13
 tags:
   - token
   - l2

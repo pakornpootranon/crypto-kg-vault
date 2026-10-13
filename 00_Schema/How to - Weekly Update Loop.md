@@ -6,6 +6,8 @@ tags:
 ---
 
 # Weekly update loop (Monday, after the chip-kg screener)
+Superseded for the automated run by [[How to - Weekly Screener Run]], which adds market data, all-chain discovery and short/long-term ranking. This note stays as the manual version.
+
 Same pattern as chip-kg: news enters as *proposed* edges and event nodes, never silent rewrites.
 
 1. Run the narrative scan queries in [[Bigdata Query Cookbook]].

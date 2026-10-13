@@ -5,7 +5,7 @@ Foundation Obsidian vault for an Ethereum and L2 DeFi knowledge graph, seeded 20
 ## Open it
 1. Obsidian > Open folder as vault > this folder.
 2. Install community plugin **Dataview** (required for `80_Dashboards`). Optional: **Breadcrumbs** or **Juggl** to render the typed edges, **Templater** for `_templates`.
-3. Start at `80_Dashboards/Token Board.md`, then `70_Research/Watchlist Ranking.md`.
+3. Start at `80_Dashboards/Horizon Board.md` (short-term vs long-term), then the latest report in `90_Weekly/`.
 
 ## Layout
 ```
@@ -17,9 +17,11 @@ Foundation Obsidian vault for an Ethereum and L2 DeFi knowledge graph, seeded 20
 50_Entities/     research houses, founders, operators, data sources
 60_Events/       dated catalysts, unlocks, incidents (status: upcoming / happened)
 70_Research/     2027 thesis, watchlist ranking, weekly log
-80_Dashboards/   Dataview boards: tokens, sentiment, catalysts, narrative heat, verify queue, graph queries
+80_Dashboards/   Dataview boards: horizon (ST/LT), tokens, sentiment, catalysts, narrative heat, verify queue, graph queries
+90_Weekly/       weekly screener reports + data/ history (market, discovery, scores JSON)
 _templates/      one template per node type
-scripts/kg.py    stdlib-only graph loader: stats, neighbors, paths, finds, link check, JSON export
+scripts/kg.py    stdlib-only graph loader: stats, neighbors, paths, finds, link check, JSON export, `rank` (ST/LT horizon scores)
+scripts/market.py  stdlib-only CoinGecko + DefiLlama puller: `update` (prices, RS vs BTC, TVL, fees, momentum), `discover` (all chains), `add`
 ```
 
 ## Conventions
@@ -34,8 +36,10 @@ scripts/kg.py    stdlib-only graph loader: stats, neighbors, paths, finds, link 
 - Real prices/metrics (dated): ETH, AAVE, UNI, ARB, STRK, ENA, HYPE, Ethereum chain stats, Uniswap fees, Aave share data, Robinhood Chain numbers.
 - Placeholder: on-chain flow scores for all tokens; prices for MORPHO, LDO, EIGEN, LINK, ONDO, SKY, OP, PENDLE, POL, QNT.
 
-## Weekly loop
-`00_Schema/How to - Weekly Update Loop.md`. Suggested cadence: Monday after the chip-kg screener, Bigdata first, web second.
+## Weekly screener (scheduled)
+A Cowork scheduled task runs every Monday 07:50 Bangkok on this Mac and follows `00_Schema/How to - Weekly Screener Run.md`: refresh market data, Bigdata.com sentiment and catalysts, discover up to 5 new coins from any chain, rank every token on two horizons (`00_Schema/Schema - Horizon Scoring.md`), and write `90_Weekly/YYYY-Www Screener.md`. Edit the playbook note to change the run; the task itself just points at it.
+
+Manual run: `python3 scripts/market.py update && python3 scripts/market.py discover && python3 scripts/kg.py rank`.
 
 ## Disclaimer
 Educational research tooling, not investment advice. Snapshot data is dated 2026-10-13 and goes stale quickly; prices, scores and rankings are illustrative of the method. Crypto assets are volatile and several names here are speculative. Verify everything marked `[[VERIFY: ...]]` and do your own research.

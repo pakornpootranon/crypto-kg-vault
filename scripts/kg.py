@@ -9,7 +9,7 @@ import os, re, sys, json, argparse
 from collections import defaultdict, deque
 
 VAULT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SKIP_DIRS = {"_templates", ".obsidian", "scripts"}
+SKIP_DIRS = {"_templates", ".obsidian", "scripts", "data", ".git"}
 FM_RE = re.compile(r"^---\n(.*?)\n---", re.S)
 EDGE_RE = re.compile(r"^\s*-\s*([a-z_]+)::\s*\[\[([^\]|#]+)(?:[|#][^\]]*)?\]\]", re.M)
 LINK_RE = re.compile(r"\[\[([^\]|#]+)(?:[|#][^\]]*)?\]\]")
@@ -164,6 +164,112 @@ def cmd_export(nodes, edges, a):
     json.dump(data, open(a.out, "w", encoding="utf-8"), indent=1, ensure_ascii=False)
     print(f"wrote {a.out}: {len(data['nodes'])} nodes, {len(data['edges'])} edges")
 
+
+# ---------- horizon ranking (see 00_Schema/Schema - Horizon Scoring.md) ----------
+def _num(v):
+    try:
+        return float(v)
+    except (TypeError, ValueError):
+        return None
+
+def horizon_scores(fm, today):
+    import datetime as _dt
+    notes = []
+    def pick(key, hint=None):
+        v = _num(fm.get(key))
+        if v is None and hint:
+            h = _num(fm.get(hint))
+            if h is not None:
+                notes.append(f"{key.replace('score_','')}~hint")
+                return h
+        if v is None:
+            notes.append(f"{key.replace('score_','')}?")
+            return 0.0
+        return v
+    st_parts = [pick("score_momentum"), pick("score_flows"), pick("score_sentiment"), pick("score_catalysts")]
+    lt_parts = [pick("score_fundamentals"), pick("score_adoption", "hint_adoption"),
+                pick("score_tokenomics", "hint_tokenomics"), pick("score_narrative")]
+    st, lt = sum(st_parts), sum(lt_parts)
+    flags = []
+    ud, up = fm.get("unlock_next_date", ""), _num(fm.get("unlock_pct_supply"))
+    if ud:
+        try:
+            days = (_dt.date.fromisoformat(ud[:10]) - today).days
+            if 0 <= days <= 14 and up is not None:
+                pen = 3 if up >= 1 else 2 if up >= 0.3 else 0
+                if pen:
+                    st -= pen; flags.append(f"unlock {ud[:10]} {up}% (-{pen})")
+        except ValueError:
+            pass
+    if fm.get("extended") == "true":
+        st -= 1; flags.append("extended 30d>100% (-1)")
+    if fm.get("risk_flag"):
+        st -= 2; lt -= 2; flags.append(f"risk: {fm['risk_flag']} (-2)")
+    illiquid = fm.get("liquidity_ok") == "false"
+    if illiquid:
+        flags.append("illiquid: no ST")
+    sent, fund = _num(fm.get("score_sentiment")), _num(fm.get("score_fundamentals"))
+    if not illiquid and st >= 13 and lt >= 13:
+        bucket = "core (both horizons)"
+    elif not illiquid and st >= 13:
+        bucket = "short-term setup"
+    elif lt >= 13:
+        bucket = "long-term accumulate"
+    elif sent is not None and fund is not None and sent >= 5 and fund <= 2:
+        bucket = "narrative blow-off"
+    elif sent is not None and fund is not None and fund >= 4 and sent <= 2:
+        bucket = "quiet accumulation"
+    elif st < 8 and lt < 8:
+        bucket = "fade"
+    else:
+        bucket = "watch"
+    return round(st, 1), round(lt, 1), bucket, flags, notes
+
+def _prev_scores(today):
+    d = os.path.join(VAULT, "90_Weekly", "data")
+    if not os.path.isdir(d):
+        return {}
+    files = sorted(f for f in os.listdir(d) if f.startswith("scores-") and f < f"scores-{today}")
+    return json.load(open(os.path.join(d, files[-1]), encoding="utf-8"))["tokens"] if files else {}
+
+ST_KEYS = {'momentum', 'flows', 'sentiment', 'catalysts'}
+
+def cmd_rank(nodes, edges, a):
+    import datetime as _dt
+    today = _dt.date.fromisoformat(a.date) if a.date else _dt.date.today()
+    prev = _prev_scores(today.isoformat())
+    rows = []
+    for n in nodes.values():
+        if n["type"] != "token" or n["fm"].get("status") == "dormant":
+            continue
+        st, lt, bucket, flags, notes = horizon_scores(n["fm"], today)
+        p = prev.get(n["id"], {})
+        rows.append(dict(id=n["id"], st=st, lt=lt, bucket=bucket, flags=flags, notes=notes, status=n["fm"].get("status", ""),
+                         dst=None if "st" not in p else round(st - p["st"], 1), dlt=None if "lt" not in p else round(lt - p["lt"], 1),
+                         new=n["id"] not in prev and bool(prev)))
+    def fmt_d(x):
+        return ("new" if prev else "-") if x is None else (f"+{x:g}" if x > 0 else f"{x:g}")
+    print("### Short-term (1 to 4 weeks)")
+    print("| # | Token | ST | dWk | Bucket | Flags | Gaps |\n|---|---|---|---|---|---|---|")
+    for i, r in enumerate(sorted(rows, key=lambda r: -r["st"]), 1):
+        print(f"| {i} | [[{r['id']}]] | {r['st']:g} | {fmt_d(r['dst'])} | {r['bucket']} | {'; '.join(r['flags'])} | {', '.join(n for n in r['notes'] if n.split('?')[0].split('~')[0] in ST_KEYS)} |")
+    print("\n### Long-term (6 to 24 months)")
+    print("| # | Token | LT | dWk | Bucket | Flags | Gaps |\n|---|---|---|---|---|---|---|")
+    for i, r in enumerate(sorted(rows, key=lambda r: -r["lt"]), 1):
+        print(f"| {i} | [[{r['id']}]] | {r['lt']:g} | {fmt_d(r['dlt'])} | {r['bucket']} | {'; '.join(r['flags'])} | {', '.join(n for n in r['notes'] if n.split('?')[0].split('~')[0] not in ST_KEYS)} |")
+    if a.write:
+        d = os.path.join(VAULT, "90_Weekly", "data"); os.makedirs(d, exist_ok=True)
+        out = os.path.join(d, f"scores-{today.isoformat()}.json")
+        json.dump(dict(date=today.isoformat(), tokens={r["id"]: dict(st=r["st"], lt=r["lt"], bucket=r["bucket"], flags=r["flags"]) for r in rows}),
+                  open(out, "w", encoding="utf-8"), indent=1)
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        from market import set_fm
+        for r in rows:
+            path = os.path.join(VAULT, nodes[r["id"]]["path"])
+            t = open(path, encoding="utf-8").read()
+            open(path, "w", encoding="utf-8").write(set_fm(t, dict(st_score=r["st"], lt_score=r["lt"], bucket=r["bucket"])))
+        print(f"\nwrote {os.path.relpath(out, VAULT)} and st_score/lt_score/bucket into {len(rows)} token notes")
+
 def main():
     p = argparse.ArgumentParser(); sp = p.add_subparsers(dest="cmd", required=True)
     sp.add_parser("stats")
@@ -174,6 +280,7 @@ def main():
     x = sp.add_parser("narrative"); x.add_argument("name")
     x = sp.add_parser("events"); x.add_argument("--upcoming", action="store_true")
     sp.add_parser("check"); sp.add_parser("verify")
+    x = sp.add_parser("rank"); x.add_argument("--write", action="store_true"); x.add_argument("--date")
     x = sp.add_parser("export"); x.add_argument("out", nargs="?", default="graph.json")
     a = p.parse_args()
     nodes, edges = load()

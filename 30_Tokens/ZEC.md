@@ -6,9 +6,9 @@ snapshot_date: 2026-10-13
 status: watch
 tier: 2
 social_heat: 5
-price_usd: 
-mcap_usd_m: 
-price_date: 
+price_usd: 1204.05
+mcap_usd_m: 20448
+price_date: 2026-10-13
 bigdata_entity_id: 
 bigdata_entity_note: 
 sentiment_current: 
@@ -25,6 +25,41 @@ score_sentiment:
 score_fundamentals: 
 score_catalysts: 
 category: privacy (non-ETH context)
+defillama_parent:
+defillama_slug:
+defillama_chain:
+score_momentum: 2
+score_adoption:
+score_tokenomics:
+score_narrative:
+hint_adoption:
+hint_tokenomics: 5
+unlock_next_date:
+unlock_pct_supply:
+risk_flag:
+st_setup:
+st_entry:
+st_invalidation:
+lt_thesis:
+st_score:
+lt_score:
+bucket:
+coingecko_id: zcash
+fdv_usd_m: 20450
+mc_fdv: 1.0
+vol24h_usd_m: 1030.2
+chg_7d: -10.5
+chg_30d: 8.9
+rs_btc_7d: -7.6
+rs_btc_30d: 0.1
+ath_drawdown_pct: -62.3
+tvl_usd_m:
+tvl_chg_7d:
+fees_30d_usd_m:
+fees_chg_30d:
+liquidity_ok: true
+extended: false
+mkt_date: 2026-10-13
 tags:
   - token
   - privacy

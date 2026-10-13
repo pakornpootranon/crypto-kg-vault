@@ -6,9 +6,9 @@ snapshot_date: 2026-10-13
 status: watch
 tier: 1
 social_heat: 4
-price_usd: 2564
-mcap_usd_m: 
-price_date: 2026-10-12
+price_usd: 2498.35
+mcap_usd_m: 305183
+price_date: 2026-10-13
 bigdata_entity_id: 
 bigdata_entity_note: use smart search 'Ethereum (ETH)'; no single company entity
 sentiment_current: 
@@ -25,6 +25,41 @@ score_sentiment:
 score_fundamentals: 
 score_catalysts: 
 category: L1 gas / settlement
+defillama_parent:
+defillama_slug:
+defillama_chain: Ethereum
+score_momentum: 1
+score_adoption:
+score_tokenomics:
+score_narrative:
+hint_adoption: 2
+hint_tokenomics: 5
+unlock_next_date:
+unlock_pct_supply:
+risk_flag:
+st_setup:
+st_entry:
+st_invalidation:
+lt_thesis:
+st_score:
+lt_score:
+bucket:
+coingecko_id: ethereum
+fdv_usd_m: 305183
+mc_fdv: 1.0
+vol24h_usd_m: 15266.1
+chg_7d: -7.5
+chg_30d: 0.7
+rs_btc_7d: -4.6
+rs_btc_30d: -8.1
+ath_drawdown_pct: -49.5
+tvl_usd_m: 51368
+tvl_chg_7d: -5.3
+fees_30d_usd_m:
+fees_chg_30d:
+liquidity_ok: true
+extended: false
+mkt_date: 2026-10-13
 tags:
   - token
   - l1
