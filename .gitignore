@@ -4,3 +4,4 @@ __pycache__/
 graph.json
 .obsidian/workspace*.json
 .obsidian/cache
+_to_delete/
